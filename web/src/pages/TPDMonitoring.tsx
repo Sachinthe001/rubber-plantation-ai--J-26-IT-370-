@@ -9,6 +9,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from 'recharts'
+import { colors } from '../theme/colors'
 
 const treeOptions = ['Tree-014', 'Tree-027', 'Tree-041'] as const
 type TreeId = (typeof treeOptions)[number]
@@ -129,8 +130,8 @@ export default function TPDMonitoring() {
                 <XAxis dataKey="week" stroke="#78716c" fontSize={12} />
                 <YAxis stroke="#78716c" fontSize={12} domain={[0, 100]} unit="%" />
                 <Tooltip />
-                <ReferenceLine y={70} stroke="#dc2626" strokeDasharray="4 4" label={{ value: 'High-risk threshold', position: 'insideTopRight', fontSize: 11, fill: '#dc2626' }} />
-                <Line type="monotone" dataKey="dryCut" stroke="#047857" strokeWidth={2} dot={{ r: 3 }} />
+                <ReferenceLine y={70} stroke={colors.alert} strokeDasharray="4 4" label={{ value: 'High-risk threshold', position: 'insideTopRight', fontSize: 11, fill: colors.alert }} />
+                <Line type="monotone" dataKey="dryCut" stroke={colors.primary} strokeWidth={2} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
