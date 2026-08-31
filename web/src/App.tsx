@@ -1,10 +1,25 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Dashboard from './pages/Dashboard'
+import YieldForecast from './pages/YieldForecast'
+import DiseaseDetection from './pages/DiseaseDetection'
+import TPDMonitoring from './pages/TPDMonitoring'
+import TappingQuality from './pages/TappingQuality'
+
 function App() {
   return (
-    <div className="p-10">
-      <div className="bg-emerald-600 text-white text-xl font-bold p-6 rounded-lg">
-        If this box is green with rounded corners, React + Tailwind both work!
-      </div>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <main className="p-6">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/yield" element={<YieldForecast />} />
+          <Route path="/disease" element={<DiseaseDetection />} />
+          <Route path="/tpd" element={<TPDMonitoring />} />
+          <Route path="/tapping" element={<TappingQuality />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 
