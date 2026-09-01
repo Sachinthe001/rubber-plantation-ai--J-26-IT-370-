@@ -25,6 +25,16 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    
+    "plugins": [
+  [
+    "expo-image-picker",
+    {
+      "photosPermission": "Allow RubberAI to access your photos to upload leaf images.",
+      "cameraPermission": "Allow RubberAI to use your camera to photograph leaves."
     }
+  ]
+]
   }
 }
