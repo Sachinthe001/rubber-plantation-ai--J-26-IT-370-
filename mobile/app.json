@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "RubberSentry",
+    "slug": "rubbersentry",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,8 +31,8 @@
   [
     "expo-image-picker",
     {
-      "photosPermission": "Allow RubberAI to access your photos to upload leaf images.",
-      "cameraPermission": "Allow RubberAI to use your camera to photograph leaves."
+      "photosPermission": "Allow RubberSentry to access your photos to upload leaf images.",
+      "cameraPermission": "Allow RubberSentry to use your camera to photograph leaves."
     }
   ]
 ]
