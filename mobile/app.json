@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "RubberSentry",
+    "slug": "rubbersentry",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    
+    "plugins": [
+  [
+    "expo-image-picker",
+    {
+      "photosPermission": "Allow RubberSentry to access your photos to upload leaf images.",
+      "cameraPermission": "Allow RubberSentry to use your camera to photograph leaves."
+    }
+  ]
+]
+  }
+}
