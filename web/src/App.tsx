@@ -1,59 +1,40 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Welcome from './pages/Welcome'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
 import YieldForecast from './pages/YieldForecast'
 import DiseaseDetection from './pages/DiseaseDetection'
 import TPDMonitoring from './pages/TPDMonitoring'
 import TappingQuality from './pages/TappingQuality'
 import AdminDashboard from './pages/AdminDashboard'
-import Profile from './pages/Profile'
+import AppLayout from './components/AppLayout'
 
-function AppRoutes() {
-  const { currentUser } = useAuth()
+// Placeholders for auxiliary routes
+const RegistryPlaceholder = () => <div className="p-4 bg-white rounded-xl shadow-sm border border-stone-200"><h2 className="text-xl font-bold">Trees & Blocks Registry</h2><p className="text-stone-500 mt-2">Central database for all entities.</p></div>
+const MapPlaceholder = () => <div className="p-4 bg-white rounded-xl shadow-sm border border-stone-200"><h2 className="text-xl font-bold">Plantation Map</h2><p className="text-stone-500 mt-2">Geospatial overlays of all component data.</p></div>
+const AnalyticsPlaceholder = () => <div className="p-4 bg-white rounded-xl shadow-sm border border-stone-200"><h2 className="text-xl font-bold">Cross-Component Analytics</h2><p className="text-stone-500 mt-2">Aggregate reporting and correlations.</p></div>
+const ModelHealthPlaceholder = () => <div className="p-4 bg-white rounded-xl shadow-sm border border-stone-200"><h2 className="text-xl font-bold">Model Health</h2><p className="text-stone-500 mt-2">Accuracy, calibration, and drift monitoring.</p></div>
+const SettingsPlaceholder = () => <div className="p-4 bg-white rounded-xl shadow-sm border border-stone-200"><h2 className="text-xl font-bold">Platform Settings</h2><p className="text-stone-500 mt-2">Thresholds, user roles, and assignments.</p></div>
 
-  if (!currentUser) {
-    return (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Welcome />} />
-      </Routes>
-    )
-  }
-
-  const isAdminSide = currentUser.role === 'field_officer'
-
+function App() {
   return (
-    <>
-      <Navbar />
-      <main className="max-w-6xl mx-auto w-full p-6">
-        <Routes>
-          <Route path="/" element={isAdminSide ? <AdminDashboard /> : <Dashboard />} />
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<AdminDashboard />} />
           <Route path="/yield" element={<YieldForecast />} />
           <Route path="/disease" element={<DiseaseDetection />} />
           <Route path="/tpd" element={<TPDMonitoring />} />
           <Route path="/tapping" element={<TappingQuality />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-      <Footer />
-    </>
-  )
-}
 
-function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </AuthProvider>
+          {/* Auxiliary views */}
+          <Route path="/registry" element={<RegistryPlaceholder />} />
+          <Route path="/map" element={<MapPlaceholder />} />
+          <Route path="/analytics" element={<AnalyticsPlaceholder />} />
+          <Route path="/model-health" element={<ModelHealthPlaceholder />} />
+          <Route path="/settings" element={<SettingsPlaceholder />} />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
