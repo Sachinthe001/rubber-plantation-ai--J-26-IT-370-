@@ -9,6 +9,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native'
+import NotificationBar from '../components/NotificationBar'
 import { colors } from '../theme/colors'
 
 type Language = 'ENG' | 'SIN'
@@ -117,6 +118,7 @@ export default function YieldForecastScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <NotificationBar />
       {/* Top Header Bar */}
       <View style={styles.headerBar}>
         <View>

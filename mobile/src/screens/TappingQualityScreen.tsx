@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import { BarChart } from 'react-native-gifted-charts'
+import NotificationBar from '../components/NotificationBar'
 import { colors } from '../theme/colors'
 
 type Language = 'ENG' | 'SIN'
@@ -147,6 +148,7 @@ export default function TappingQualityScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <NotificationBar />
       {/* Top Controls Header */}
       <View style={styles.headerBar}>
         <View>

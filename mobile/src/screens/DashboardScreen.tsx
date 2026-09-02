@@ -1,6 +1,7 @@
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import ComponentCard from '../components/ComponentCard'
+import NotificationBar from '../components/NotificationBar'
 import { colors } from '../theme/colors'
 
 const components = [
@@ -39,6 +40,7 @@ export default function DashboardScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <NotificationBar />
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>Plantation overview</Text>
         <Text style={styles.heroSubtitle}>
