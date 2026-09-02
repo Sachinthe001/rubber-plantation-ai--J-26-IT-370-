@@ -233,9 +233,23 @@ export default function YieldForecastScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.tapNowBtn}>
-          <Text style={styles.tapNowBtnText}>{lang === 'SIN' ? 'දැන් තට්ටු කරන්න' : 'TAP NOW'}</Text>
-        </TouchableOpacity>
+        {/* Tap Action / No-Tap Notice */}
+        {selectedBlock.status === 'TAP' || selectedBlock.status === 'CHECK' ? (
+          <TouchableOpacity style={styles.tapNowBtn}>
+            <Text style={styles.tapNowBtnText}>{lang === 'SIN' ? 'දැන් තට්ටු කරන්න' : 'TAP NOW'}</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.noTapNotice}>
+            <Text style={styles.noTapNoticeTitle}>
+              {selectedBlock.status === 'DO_NOT_TAP' ? '🔴' : '⚪'} {lang === 'SIN' ? 'අද තට්ටු කිරීමක් නොමැත' : 'No Tapping Today'}
+            </Text>
+            <Text style={styles.noTapNoticeSub}>
+              {lang === 'SIN'
+                ? 'නිර්දේශය අනුව අද මෙම කොටස තට්ටු නොකළ යුතුය.'
+                : 'Per the model recommendation, this block should not be tapped today.'}
+            </Text>
+          </View>
+        )}
       </View>
 
       {/* Section 8: Check First Workflow */}
@@ -277,21 +291,36 @@ export default function YieldForecastScreen() {
         ))}
       </View>
 
-      {/* Section 9: Record Actual Result */}
+      {/* Section 9: Record Actual Result (only for TAP / CHECK blocks) */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>
           📝 {lang === 'SIN' ? 'සැබෑ කිරි අස්වැන්න සටහන් කරන්න' : 'Record Actual Yield'}
         </Text>
-        <Text style={styles.label}>Actual Latex Collected (kg/tree):</Text>
-        <TextInput
-          style={styles.textInput}
-          keyboardType="numeric"
-          value={actualYieldInput}
-          onChangeText={setActualYieldInput}
-        />
-        <TouchableOpacity style={styles.submitBtn} onPress={handleRecordSubmit}>
-          <Text style={styles.submitBtnText}>💾 SUBMIT RESULT</Text>
-        </TouchableOpacity>
+        {selectedBlock.status === 'DO_NOT_TAP' || selectedBlock.status === 'UNABLE' ? (
+          <View style={styles.naBox}>
+            <Text style={styles.naTitle}>
+              {selectedBlock.status === 'DO_NOT_TAP' ? '🔴' : '⚪'} {lang === 'SIN' ? 'අද අස්වැන්නක් සටහන් කළ නොහැක' : 'No Yield to Record Today'}
+            </Text>
+            <Text style={styles.naSub}>
+              {lang === 'SIN'
+                ? 'අද තට්ටු කිරීමක් අනුමත නොකළ නිසා සැබෑ අස්වැන්න ඇතුළත් කිරීම අවශ්‍ය නොවේ.'
+                : 'Since tapping was not recommended today, no actual latex yield entry is required.'}
+            </Text>
+          </View>
+        ) : (
+          <>
+            <Text style={styles.label}>Actual Latex Collected (kg/tree):</Text>
+            <TextInput
+              style={styles.textInput}
+              keyboardType="numeric"
+              value={actualYieldInput}
+              onChangeText={setActualYieldInput}
+            />
+            <TouchableOpacity style={styles.submitBtn} onPress={handleRecordSubmit}>
+              <Text style={styles.submitBtnText}>💾 SUBMIT RESULT</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </ScrollView>
   )
@@ -339,6 +368,9 @@ const styles = StyleSheet.create({
   categoryText: { fontSize: 10, fontWeight: '900', color: '#15803d' },
   tapNowBtn: { backgroundColor: colors.primary, height: 48, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
   tapNowBtnText: { color: '#ffffff', fontWeight: '900', fontSize: 14 },
+  noTapNotice: { backgroundColor: '#f5f5f4', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: '#d6d3d1' },
+  noTapNoticeTitle: { fontSize: 13, fontWeight: '800', color: '#44403c' },
+  noTapNoticeSub: { fontSize: 11, fontWeight: '600', color: '#78716c', marginTop: 2 },
   checkCard: { backgroundColor: '#fef3c7', padding: 14, borderRadius: 12, borderWidth: 2, borderColor: '#f59e0b', marginBottom: 16 },
   checkTitle: { fontSize: 14, fontWeight: '900', color: '#78350f' },
   checkSub: { fontSize: 12, color: '#92400e', marginTop: 2, marginBottom: 10 },
@@ -353,4 +385,7 @@ const styles = StyleSheet.create({
   textInput: { backgroundColor: '#f5f5f4', borderWidth: 1, borderColor: '#d6d3d1', borderRadius: 8, padding: 10, fontSize: 14, fontWeight: '800', marginBottom: 10 },
   submitBtn: { backgroundColor: colors.primary, height: 44, borderRadius: 8, justifyContent: 'center', alignItems: 'center' },
   submitBtnText: { color: '#ffffff', fontSize: 13, fontWeight: '800' },
+  naBox: { backgroundColor: '#f5f5f4', padding: 14, borderRadius: 10, borderStyle: 'dashed', borderWidth: 1, borderColor: '#a8a29e', alignItems: 'center' },
+  naTitle: { fontSize: 13, fontWeight: '800', color: '#57534e' },
+  naSub: { fontSize: 11, fontWeight: '600', color: '#78716c', textAlign: 'center', marginTop: 4 },
 })

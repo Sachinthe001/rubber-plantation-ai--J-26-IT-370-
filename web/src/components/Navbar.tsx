@@ -48,9 +48,9 @@ export default function Navbar() {
             to="/profile"
             className="flex items-center gap-2 bg-stone-800 hover:bg-stone-750 px-3 py-1.5 rounded-full border border-stone-700 transition"
           >
-            <span className="text-sm">{isAdminSide ? '👔' : '👨‍🌾'}</span>
+            <span className="text-sm">👔</span>
             <span className="text-stone-200 font-bold">
-              {currentUser?.name || 'User'} <span className="text-[10px] text-emerald-400 font-black">({roleLabel})</span>
+              {currentUser?.name || 'Officer'} <span className="text-[10px] text-emerald-400 font-black">({roleLabel})</span>
             </span>
           </NavLink>
 

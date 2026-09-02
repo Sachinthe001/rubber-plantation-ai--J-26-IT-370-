@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAuth, type Role } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 import { districts } from '../data/districts'
 
 type FormState = {
@@ -23,7 +23,6 @@ const initialForm: FormState = {
 export default function Register() {
   const navigate = useNavigate()
   const { registerAs } = useAuth()
-  const [role, setRole] = useState<Role>('tapper')
   const [form, setForm] = useState<FormState>(initialForm)
   const [username, setUsername] = useState<string | null>(null)
   const [language, setLanguage] = useState<'ENG' | 'SIN'>('ENG')
@@ -35,7 +34,7 @@ export default function Register() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const profile = registerAs({
-      name: form.name || (role === 'tapper' ? 'New Rubber Tapper' : 'New Field Officer'),
+      name: form.name || 'New Field Officer',
       nic: form.nic,
       dob: form.dob,
       district: form.district || 'Kegalle',
@@ -43,7 +42,7 @@ export default function Register() {
       phone: form.phone,
       email: form.email,
       estate: form.estate || 'Kegalle Rubber Estate',
-      role,
+      role: 'field_officer',
     })
     setUsername(profile.username)
   }
@@ -61,21 +60,21 @@ export default function Register() {
             </span>
             <h1 className="text-2xl font-black text-white mt-2">Welcome to RubberSentry</h1>
             <p className="text-stone-300 text-xs mt-1">
-              Your System ID has been generated:
+              Your Field Officer System ID has been generated:
             </p>
           </div>
 
           <div className="bg-stone-950 border-2 border-emerald-500/50 p-4 rounded-2xl">
-            <p className="text-[10px] text-stone-400 font-bold uppercase">System Worker ID</p>
+            <p className="text-[10px] text-stone-400 font-bold uppercase">Field Officer ID</p>
             <p className="text-3xl font-black text-emerald-400 font-mono tracking-wider mt-0.5">{username}</p>
-            <p className="text-[10px] text-stone-400 mt-1">Use this ID or phone number to log in anywhere</p>
+            <p className="text-[10px] text-stone-400 mt-1">Use this ID or your phone number/email to log in</p>
           </div>
 
           <button
             onClick={() => navigate('/')}
             className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black text-sm py-3.5 rounded-xl cursor-pointer shadow-lg transition"
           >
-            Enter RubberSentry Studio ➔
+            Enter Officer Studio ➔
           </button>
         </div>
       </div>
@@ -90,7 +89,7 @@ export default function Register() {
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-2">
             <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-black px-3 py-1 rounded-full uppercase">
-              Worker Onboarding
+              Field Officer Onboarding
             </span>
             <button
               type="button"
@@ -100,52 +99,12 @@ export default function Register() {
               {language === 'ENG' ? 'සිංහල' : 'English'}
             </button>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">Create RubberSentry Worker Account</h1>
+          <h1 className="text-2xl sm:text-3xl font-black text-white">Create Field Officer Account</h1>
           <p className="text-xs text-stone-400">
             {language === 'ENG'
-              ? 'Join the Risk-Aware Rubber Plantation AI Network'
-              : 'රබර් වතු ක්ෂේත්‍ර ජාලයට එකතු වන්න'}
+              ? 'Join the Risk-Aware Rubber Plantation AI Management System'
+              : 'ක්ෂේත්‍ර නිලධාරී කළමනාකරණ පද්ධතියට ලියාපදිංචි වන්න'}
           </p>
-        </div>
-
-        {/* Role Selection */}
-        <div>
-          <label className="block text-xs font-bold text-stone-400 mb-1.5 uppercase">
-            Account Type
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setRole('tapper')}
-              className={`p-3.5 rounded-2xl border text-left cursor-pointer transition ${
-                role === 'tapper'
-                  ? 'bg-emerald-950/80 border-emerald-500 text-white shadow-lg'
-                  : 'bg-stone-950/60 border-stone-800 text-stone-400 hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-2 font-black text-sm text-emerald-400">
-                <span>👨‍🌾</span>
-                <span>Rubber Tapper</span>
-              </div>
-              <p className="text-[10px] text-stone-400 mt-1">Field tapping quality, bark audit &amp; TPD logging</p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setRole('field_officer')}
-              className={`p-3.5 rounded-2xl border text-left cursor-pointer transition ${
-                role === 'field_officer'
-                  ? 'bg-cyan-950/80 border-cyan-500 text-white shadow-lg'
-                  : 'bg-stone-950/60 border-stone-800 text-stone-400 hover:text-white'
-              }`}
-            >
-              <div className="flex items-center gap-2 font-black text-sm text-cyan-400">
-                <span>👔</span>
-                <span>Field Officer</span>
-              </div>
-              <p className="text-[10px] text-stone-400 mt-1">Plantation triage, AI override &amp; supervisory reporting</p>
-            </button>
-          </div>
         </div>
 
         {/* Form Inputs Grid */}
@@ -222,7 +181,7 @@ export default function Register() {
           type="submit"
           className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black text-sm py-3.5 rounded-xl cursor-pointer shadow-lg transition"
         >
-          Create {role === 'tapper' ? 'Tapper' : 'Field Officer'} Account ➔
+          Create Field Officer Account ➔
         </button>
 
         <p className="text-xs text-stone-400 text-center">

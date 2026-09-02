@@ -5,7 +5,7 @@ import { useAuth, type Role } from '../context/AuthContext'
 export default function Login() {
   const { loginAs } = useAuth()
   const navigate = useNavigate()
-  const [role, setRole] = useState<Role>('tapper')
+  const role: Role = 'field_officer'
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [language, setLanguage] = useState<'ENG' | 'SIN'>('ENG')
@@ -14,7 +14,7 @@ export default function Login() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    loginAs(role, identifier || (role === 'tapper' ? 'Sunanda (Master Tapper)' : 'Aruna Pathirana (Field Officer)'))
+    loginAs(role, identifier || 'Aruna Pathirana (Field Officer)')
     navigate('/')
   }
 
@@ -96,15 +96,13 @@ export default function Login() {
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-bold text-stone-300 mb-1">
-                {role === 'tapper'
-                  ? language === 'ENG' ? 'Tapper ID / Phone Number' : 'තට්ටු අංකය / දුරකථන'
-                  : language === 'ENG' ? 'Officer ID / Email' : 'නිලධාරී අංකය / විද්‍යුත් තැපෑල'}
+                {language === 'ENG' ? 'Field Officer ID / Email' : 'නිලධාරී අංකය / විද්‍යුත් තැපෑල'}
               </label>
               <input
                 type="text"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder={role === 'tapper' ? 'e.g. TAP-4102 or 0771234567' : 'e.g. OFF-108 or officer@rubber.lk'}
+                placeholder="e.g. OFF-108 or officer@rubber.lk"
                 className="w-full bg-stone-950 border border-stone-700 rounded-xl px-4 py-3 text-sm text-white placeholder-stone-600 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
               />
             </div>
@@ -150,14 +148,14 @@ export default function Login() {
             type="submit"
             className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black text-sm py-3.5 rounded-xl cursor-pointer shadow-lg shadow-emerald-950/60 transition active:scale-[0.99]"
           >
-            {language === 'ENG' ? 'Sign In to RubberSentry' : 'ප්‍රවේශ වන්න'} ➔
+            {language === 'ENG' ? 'Sign In to Officer Studio' : 'ප්‍රවේශ වන්න'} ➔
           </button>
         </form>
 
         <div className="pt-2 border-t border-stone-800 text-center text-xs text-stone-400">
-          {language === 'ENG' ? "Don't have a field worker account?" : 'නව ගිණුමක් අවශ්‍යද?'}{' '}
+          {language === 'ENG' ? "Don't have a Field Officer account?" : 'නව ගිණුමක් අවශ්‍යද?'}{' '}
           <Link to="/register" className="text-emerald-400 font-extrabold hover:underline">
-            {language === 'ENG' ? 'Register New Profile' : 'ලියාපදිංචි වන්න'}
+            {language === 'ENG' ? 'Register New Officer Profile' : 'ලියාපදිංචි වන්න'}
           </Link>
         </div>
       </div>
