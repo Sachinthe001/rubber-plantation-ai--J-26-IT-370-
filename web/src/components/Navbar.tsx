@@ -2,15 +2,6 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-const tapperLinks = [
-  { to: '/', label: 'Dashboard' },
-  { to: '/yield', label: 'Yield Forecast' },
-  { to: '/disease', label: 'Disease Detection' },
-  { to: '/tpd', label: 'TPD Monitoring' },
-  { to: '/tapping', label: 'Tapping Quality' },
-  { to: '/profile', label: 'My Profile' },
-]
-
 const adminLinks = [
   { to: '/', label: 'Officer Studio' },
   { to: '/yield', label: 'Yield Forecast' },
@@ -23,12 +14,11 @@ const adminLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { currentUser, logout } = useAuth()
-  const isAdminSide = currentUser?.role === 'field_officer'
-  const links = isAdminSide ? adminLinks : tapperLinks
-  const roleLabel = isAdminSide ? 'Field Officer' : 'Rubber Tapper'
+  const links = adminLinks
+  const roleLabel = 'Field Officer'
 
   return (
-    <nav className="bg-stone-900 text-white border-b-2 border-emerald-500/30 sticky top-0 z-40 shadow-lg">
+    <nav className="bg-emerald-900 text-white border-b-2 border-emerald-500/30 sticky top-0 z-40 shadow-lg">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3.5">
         <NavLink to="/" className="flex items-center gap-2 font-black text-xl text-white tracking-tight">
           <span className="bg-emerald-500 text-stone-950 p-1 rounded-lg text-sm">🌿</span>
@@ -81,7 +71,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden flex flex-col gap-2 px-6 pb-4 pt-2 text-xs font-bold bg-stone-900 border-t border-stone-800">
+        <div className="md:hidden flex flex-col gap-2 px-6 pb-4 pt-2 text-xs font-bold bg-emerald-900 border-t border-emerald-800">
           {links.map((link) => (
             <NavLink
               key={link.to}

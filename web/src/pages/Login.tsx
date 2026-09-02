@@ -71,26 +71,14 @@ export default function Login() {
             <span className="font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-1">
               ⚡ {language === 'ENG' ? '1-Tap Quick Demo Login' : 'ක්ෂණික ප්‍රවේශය'}
             </span>
-            <span className="text-[10px] text-stone-400">Select Role</span>
+            <span className="text-[10px] text-stone-400">Field Officer Login</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickDemoLogin('tapper', 'Sunanda', 'TAP-4102')}
-              className="bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 p-3 rounded-xl text-left cursor-pointer transition shadow hover:scale-[1.02]"
-            >
-              <p className="text-xs font-black text-emerald-300">👨‍🌾 Sunanda</p>
-              <p className="text-[10px] font-bold text-stone-400">Master Tapper (TAP-4102)</p>
-              <span className="inline-block bg-emerald-500/20 text-emerald-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded mt-1">
-                Block A12 · Kegalle
-              </span>
-            </button>
-
+          <div>
             <button
               type="button"
               onClick={() => handleQuickDemoLogin('field_officer', 'Aruna Pathirana', 'OFF-108')}
-              className="bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 p-3 rounded-xl text-left cursor-pointer transition shadow hover:scale-[1.02]"
+              className="w-full bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 p-3 rounded-xl text-left cursor-pointer transition shadow hover:scale-[1.02]"
             >
               <p className="text-xs font-black text-cyan-300">👔 Aruna Pathirana</p>
               <p className="text-[10px] font-bold text-stone-400">Field Officer (OFF-108)</p>
@@ -103,38 +91,6 @@ export default function Login() {
 
         {/* Traditional Form Login */}
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
-          {/* Role Selector Pills */}
-          <div>
-            <label className="block text-xs font-bold text-stone-400 mb-1.5 uppercase">
-              {language === 'ENG' ? 'Select Your Account Type' : 'ගිණුම් වර්ගය තෝරන්න'}
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setRole('tapper')}
-                className={`py-3 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-2 ${
-                  role === 'tapper'
-                    ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg shadow-emerald-900/40'
-                    : 'bg-stone-800 text-stone-400 border-stone-700 hover:text-white'
-                }`}
-              >
-                <span>👨‍🌾</span>
-                <span>{language === 'ENG' ? 'Rubber Tapper' : 'රබර් කපන්නා'}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('field_officer')}
-                className={`py-3 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-2 ${
-                  role === 'field_officer'
-                    ? 'bg-cyan-600 text-white border-cyan-400 shadow-lg shadow-cyan-900/40'
-                    : 'bg-stone-800 text-stone-400 border-stone-700 hover:text-white'
-                }`}
-              >
-                <span>👔</span>
-                <span>{language === 'ENG' ? 'Field Officer' : 'ක්ෂේත්‍ර නිලධාරී'}</span>
-              </button>
-            </div>
-          </div>
 
           {/* Login Input Fields */}
           <div className="space-y-3">

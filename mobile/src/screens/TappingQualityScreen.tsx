@@ -9,6 +9,7 @@ import {
   Alert,
   Switch,
   TouchableOpacity,
+  TextInput,
 } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import { BarChart } from 'react-native-gifted-charts'
@@ -106,6 +107,8 @@ export default function TappingQualityScreen() {
   const [voiceGuidance, setVoiceGuidance] = useState<boolean>(true)
   const [isOffline, setIsOffline] = useState<boolean>(false)
   const [selectedScenario, setSelectedScenario] = useState<SampleScenario>(SAMPLE_SCENARIOS[0])
+  const [selectedTreeId, setSelectedTreeId] = useState<string>('TR-4082')
+  const [isScanningQR, setIsScanningQR] = useState<boolean>(false)
   const [photoUri, setPhotoUri] = useState<string | null>(null)
   const [qualityOverride, setQualityOverride] = useState<QualityAlert | null>(null)
   const [referralSent, setReferralSent] = useState<boolean>(false)
@@ -186,7 +189,106 @@ export default function TappingQualityScreen() {
         <Switch value={isOffline} onValueChange={setIsOffline} trackColor={{ true: colors.watch }} />
       </View>
 
-      {/* Demo Scenario Picker */}
+      {/* Top Selection Bar: Tree ID & QR Scanner (FIRST STEP) */}
+      <View style={styles.treeSelectCard}>
+        <Text style={styles.treeSelectTitle}>
+          🌳 {lang === 'SIN' ? '1. ශාක අංකය තෝරන්න (Tree Identification)' : '1. Tree Identification (Scan QR or Enter Tree ID)'}
+        </Text>
+
+        <View style={styles.treeSelectActions}>
+          <TouchableOpacity
+            style={[styles.qrScanBtn, isScanningQR && styles.qrScanBtnActive]}
+            onPress={() => {
+              setIsScanningQR(true)
+              setTimeout(() => {
+                const randomTree = SAMPLE_SCENARIOS[Math.floor(Math.random() * SAMPLE_SCENARIOS.length)]
+                setSelectedScenario(randomTree)
+                setSelectedTreeId(randomTree.treeId)
+                setIsScanningQR(false)
+                Alert.alert('QR Scanned! 🎯', `Tree ID Detected: ${randomTree.treeId}`)
+              }, 1200)
+            }}
+          >
+            <Text style={styles.qrScanBtnText}>
+              {isScanningQR
+                ? lang === 'SIN' ? '⌛ ස්කෑන් කරමින්...' : '⌛ Scanning QR...'
+                : lang === 'SIN' ? '📷 QR ස්කෑන් කරන්න' : '📷 Scan Tree QR Tag'}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.manualInputWrapper}>
+            <TextInput
+              style={styles.treeInput}
+              placeholder="e.g. TR-4082"
+              placeholderTextColor="#a8a29e"
+              value={selectedTreeId}
+              onChangeText={(text) => {
+                setSelectedTreeId(text)
+                const match = SAMPLE_SCENARIOS.find((s) => s.treeId.toLowerCase() === text.trim().toLowerCase())
+                if (match) setSelectedScenario(match)
+              }}
+            />
+          </View>
+        </View>
+
+        {/* Tree Selector Chips */}
+        <View style={styles.chipRow}>
+          <Text style={styles.chipLabel}>{lang === 'SIN' ? 'ක්ෂණික තේරීම:' : 'Select Tree:'}</Text>
+          {['TR-4082', 'TR-4083', 'TR-4085', 'TR-4089'].map((tId) => (
+            <TouchableOpacity
+              key={tId}
+              style={[styles.treeChip, selectedTreeId === tId && styles.treeChipActive]}
+              onPress={() => {
+                setSelectedTreeId(tId)
+                const match = SAMPLE_SCENARIOS.find((s) => s.treeId === tId)
+                if (match) setSelectedScenario(match)
+              }}
+            >
+              <Text style={[styles.treeChipText, selectedTreeId === tId && styles.treeChipTextActive]}>{tId}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Previous Tapping History Card for Selected Tree */}
+        <View style={styles.historyContextBox}>
+          <View style={styles.historyHeaderRow}>
+            <Text style={styles.historyTreeHeader}>
+              📌 {selectedTreeId} {lang === 'SIN' ? 'පෙර තට්ටු කිරීමේ දත්ත' : 'Previous Tapping History'}
+            </Text>
+            <Text style={styles.historyBadge}>Clone PB 260</Text>
+          </View>
+
+          <View style={styles.historyMetricsGrid}>
+            <View style={styles.historyMetricCell}>
+              <Text style={styles.historyMetricLabel}>{lang === 'SIN' ? 'පෙර පොතු පළල' : 'Last Bark Width'}</Text>
+              <Text style={styles.historyMetricValue}>{selectedScenario.barkStripWidthCm} cm</Text>
+            </View>
+
+            <View style={styles.historyMetricCell}>
+              <Text style={styles.historyMetricLabel}>{lang === 'SIN' ? 'පෙර තත්ත්වය' : 'Last Grade'}</Text>
+              <Text style={[
+                styles.historyMetricValue,
+                {
+                  color: selectedScenario.grade === 'ACCEPTABLE'
+                    ? colors.primary
+                    : selectedScenario.grade === 'CORRECTION'
+                    ? colors.watch
+                    : colors.alert
+                }
+              ]}>
+                {selectedScenario.grade}
+              </Text>
+            </View>
+
+            <View style={styles.historyMetricCell}>
+              <Text style={styles.historyMetricLabel}>{lang === 'SIN' ? 'පෙර කෝණය' : 'Last Cut Slope'}</Text>
+              <Text style={styles.historyMetricValue}>{selectedScenario.cutSlopeDeg}°</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/* Demo Scenario Picker (SECOND STEP) */}
       <View style={styles.demoBox}>
         <Text style={styles.demoTitle}>
           🧪 {lang === 'SIN' ? 'ආදර්ශ තට්ටු කිරීම්:' : 'Select Demo Cut Scenario:'}
@@ -433,4 +535,65 @@ const styles = StyleSheet.create({
   actionBtnText: { color: '#ffffff', fontSize: 14, fontWeight: '800' },
   sentBox: { backgroundColor: '#15803d', padding: 10, borderRadius: 8, width: '100%', alignItems: 'center' },
   sentText: { color: '#ffffff', fontWeight: '800', fontSize: 12 },
+  treeSelectCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 16,
+    borderWidth: 1.5,
+    borderColor: '#047857',
+    elevation: 2,
+  },
+  treeSelectTitle: { fontSize: 13, fontWeight: '900', color: '#047857', marginBottom: 10 },
+  treeSelectActions: { flexDirection: 'row', gap: 8, marginBottom: 10 },
+  qrScanBtn: {
+    flex: 1,
+    backgroundColor: '#047857',
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  qrScanBtnActive: { backgroundColor: '#b45309' },
+  qrScanBtnText: { color: '#ffffff', fontSize: 12, fontWeight: '800' },
+  manualInputWrapper: { flex: 1 },
+  treeInput: {
+    backgroundColor: '#f5f5f4',
+    borderWidth: 1,
+    borderColor: '#d6d3d1',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#1c1917',
+  },
+  chipRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 },
+  chipLabel: { fontSize: 11, fontWeight: '700', color: '#78716c' },
+  treeChip: {
+    backgroundColor: '#f5f5f4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#e7e5e4',
+  },
+  treeChipActive: { backgroundColor: '#ecfdf5', borderColor: '#047857' },
+  treeChipText: { fontSize: 11, fontWeight: '700', color: '#44403c' },
+  treeChipTextActive: { color: '#047857', fontWeight: '900' },
+  historyContextBox: {
+    backgroundColor: '#ecfdf5',
+    borderRadius: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#a7f3d0',
+  },
+  historyHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+  historyTreeHeader: { fontSize: 12, fontWeight: '900', color: '#065f46' },
+  historyBadge: { backgroundColor: '#047857', color: '#ffffff', fontSize: 9, fontWeight: '800', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4, overflow: 'hidden' },
+  historyMetricsGrid: { flexDirection: 'row', gap: 6 },
+  historyMetricCell: { flex: 1, backgroundColor: '#ffffff', padding: 6, borderRadius: 6, alignItems: 'center', borderWidth: 1, borderColor: '#d1fae5' },
+  historyMetricLabel: { fontSize: 9, fontWeight: '700', color: '#65a30d' },
+  historyMetricValue: { fontSize: 13, fontWeight: '900', color: '#065f46', marginTop: 2 },
 })

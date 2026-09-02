@@ -70,48 +70,17 @@ export default function LoginScreen({ navigation }: any) {
               <Text style={styles.demoBtnTitle}>👨‍🌾 Sunanda (TAP-4102)</Text>
               <Text style={styles.demoBtnSub}>Master Tapper · Block A12</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.demoBtnOfficer}
-              onPress={() => handleQuickDemo('field_officer', 'Aruna Pathirana (Field Officer)')}
-            >
-              <Text style={styles.demoBtnTitleOfficer}>👔 Aruna (OFF-108)</Text>
-              <Text style={styles.demoBtnSub}>Field Officer · 14 Blocks</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
         {/* Traditional Form */}
         <View style={styles.formCard}>
-          <Text style={styles.label}>SELECT ACCOUNT TYPE</Text>
-
-          {/* Role Switcher Chips */}
-          <View style={styles.roleRow}>
-            <TouchableOpacity
-              style={[styles.roleChip, role === 'tapper' && styles.roleChipActiveTapper]}
-              onPress={() => setRole('tapper')}
-            >
-              <Text style={[styles.roleChipText, role === 'tapper' && styles.roleChipTextActive]}>
-                👨‍🌾 {lang === 'ENG' ? 'Tapper' : 'රබර් කපන්නා'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.roleChip, role === 'field_officer' && styles.roleChipActiveOfficer]}
-              onPress={() => setRole('field_officer')}
-            >
-              <Text style={[styles.roleChipText, role === 'field_officer' && styles.roleChipTextActive]}>
-                👔 {lang === 'ENG' ? 'Field Officer' : 'නිලධාරී'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
           <Text style={styles.inputLabel}>
-            {role === 'tapper' ? 'Tapper ID / Phone Number' : 'Officer ID / Email'}
+            Tapper ID / Phone Number
           </Text>
           <TextInput
             style={styles.input}
-            placeholder={role === 'tapper' ? 'e.g. TAP-4102' : 'e.g. OFF-108'}
+            placeholder="e.g. TAP-4102"
             placeholderTextColor="#a8a29e"
             value={identifier}
             onChangeText={setIdentifier}

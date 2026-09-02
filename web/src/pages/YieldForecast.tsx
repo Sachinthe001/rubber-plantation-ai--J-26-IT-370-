@@ -145,7 +145,7 @@ export default function YieldForecast() {
   return (
     <div className="space-y-6 font-sans text-stone-900 pb-12">
       {/* Top Banner & Language Switcher */}
-      <header className="bg-stone-900 text-white p-6 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <header className="bg-emerald-900 text-white p-6 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
