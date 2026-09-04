@@ -31,26 +31,6 @@ export default function RegisterScreen({ navigation }: any) {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.label}>ACCOUNT TYPE</Text>
-          <View style={styles.roleRow}>
-            <TouchableOpacity
-              style={[styles.roleChip, role === 'tapper' && styles.roleActiveTapper]}
-              onPress={() => setRole('tapper')}
-            >
-              <Text style={[styles.roleText, role === 'tapper' && styles.roleTextActive]}>
-                👨‍🌾 Rubber Tapper
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.roleChip, role === 'field_officer' && styles.roleActiveOfficer]}
-              onPress={() => setRole('field_officer')}
-            >
-              <Text style={[styles.roleText, role === 'field_officer' && styles.roleTextActive]}>
-                👔 Field Officer
-              </Text>
-            </TouchableOpacity>
-          </View>
 
           <Text style={styles.inputLabel}>Full Name *</Text>
           <TextInput

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 
-export type Role = 'tapper' | 'field_officer'
+export type Role = 'tapper'
 
 export type UserProfile = {
   username: string
@@ -33,30 +33,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     language: 'ENG',
   })
 
-  function loginAs(role: Role, name: string) {
-    const prefix = role === 'tapper' ? 'TAP' : 'OFF'
-    const randomId = `${prefix}-${Math.floor(1000 + Math.random() * 9000)}`
+  function loginAs(_role: Role, name: string) {
+    const randomId = `TAP-${Math.floor(1000 + Math.random() * 9000)}`
     setCurrentUser({
       username: randomId,
-      name: name || (role === 'tapper' ? 'Sunanda (Tapper)' : 'Aruna Pathirana (Officer)'),
+      name: name || 'Sunanda (Tapper)',
       nic: '198812345678',
       phone: '0771234567',
-      estate: role === 'tapper' ? 'Kegalle Estate - Block A12' : 'Kegalle & Kalutara Estates',
-      role,
+      estate: 'Kegalle Estate - Block A12',
+      role: 'tapper',
       language: 'ENG',
     })
   }
 
-  function registerAs(role: Role, name: string, phone: string, estate: string): UserProfile {
-    const prefix = role === 'tapper' ? 'TAP' : 'OFF'
-    const randomId = `${prefix}-${Math.floor(1000 + Math.random() * 9000)}`
+  function registerAs(_role: Role, name: string, phone: string, estate: string): UserProfile {
+    const randomId = `TAP-${Math.floor(1000 + Math.random() * 9000)}`
     const profile: UserProfile = {
       username: randomId,
-      name: name || 'New Worker',
+      name: name || 'New Tapper',
       nic: '',
       phone: phone || '0770000000',
       estate: estate || 'Kegalle Estate',
-      role,
+      role: 'tapper',
       language: 'ENG',
     }
     setCurrentUser(profile)

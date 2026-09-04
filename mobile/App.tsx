@@ -26,15 +26,12 @@ const tabIcons: { [key: string]: any } = {
 }
 
 function MainTabNavigator() {
-  const { currentUser } = useAuth()
-  const isOfficer = currentUser?.role === 'field_officer'
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerStyle: { backgroundColor: isOfficer ? '#083344' : colors.primary },
+        headerStyle: { backgroundColor: colors.primary },
         headerTintColor: '#fff',
-        tabBarActiveTintColor: isOfficer ? '#06b6d4' : colors.primary,
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarIcon: ({ color, size }) => (
           <Ionicons name={tabIcons[route.name]} color={color} size={size} />
@@ -44,7 +41,7 @@ function MainTabNavigator() {
       <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{ title: isOfficer ? 'Officer Studio' : 'Dashboard' }}
+        options={{ title: 'Dashboard' }}
       />
       <Tab.Screen
         name="Yield"

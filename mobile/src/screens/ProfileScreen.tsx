@@ -10,11 +10,12 @@ import {
   Alert,
 } from 'react-native'
 import { useAuth } from '../context/AuthContext'
+import NotificationBar from '../components/NotificationBar'
 import { colors } from '../theme/colors'
 
 export default function ProfileScreen() {
   const { currentUser, logout, updateProfile } = useAuth()
-  const isOfficer = currentUser?.role === 'field_officer'
+  const isOfficer = false // Removed field_officer check as role is strictly tapper
 
   const [offlineSync, setOfflineSync] = useState(true)
   const [voiceGuidance, setVoiceGuidance] = useState(true)
@@ -36,7 +37,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        
+        <NotificationBar />
         {/* Profile Card Header */}
         <View style={[styles.headerCard, isOfficer ? styles.headerOfficer : styles.headerTapper]}>
           <View style={styles.avatarCircle}>

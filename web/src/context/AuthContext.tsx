@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
-export type Role = 'tapper' | 'field_officer'
+export type Role = 'field_officer'
 
 export type Profile = {
   username: string
@@ -27,10 +27,9 @@ type AuthState = {
 const AuthContext = createContext<AuthState | undefined>(undefined)
 const SESSION_KEY = 'rubbersentry-session'
 
-function generateUsername(role: Role): string {
-  const prefix = role === 'tapper' ? 'TAP' : 'FO'
+function generateUsername(_role: Role): string {
   const random = Math.floor(1000 + Math.random() * 9000)
-  return `${prefix}-${random}`
+  return `FO-${random}`
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -47,17 +46,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   function registerAs(data: Omit<Profile, 'username' | 'profilePicture'>): Profile {
-    const profile: Profile = { ...data, username: generateUsername(data.role), profilePicture: null }
+    const profile: Profile = { ...data, role: 'field_officer', username: generateUsername('field_officer'), profilePicture: null }
     persist(profile)
     return profile
   }
 
-  function loginAs(role: Role, identifier: string) {
+  function loginAs(_role: Role, identifier: string) {
     const profile: Profile = {
-      username: identifier || generateUsername(role),
-      name: identifier || (role === 'tapper' ? 'Tapper' : 'Field Officer'),
+      username: identifier || generateUsername('field_officer'),
+      name: identifier || 'Aruna Pathirana (Field Officer)',
       nic: '', dob: '', district: '', area: '', phone: '', email: '', estate: '',
-      role,
+      role: 'field_officer',
       profilePicture: null,
     }
     persist(profile)

@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext'
 
 export default function Profile() {
   const { currentUser, updateProfile, logout } = useAuth()
-  const isOfficer = currentUser?.role === 'field_officer'
 
   const [name, setName] = useState(currentUser?.name || '')
   const [phone, setPhone] = useState(currentUser?.phone || '0771234567')
@@ -22,32 +21,22 @@ export default function Profile() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 font-sans text-stone-900 pb-12">
       {/* Header Banner */}
-      <div className={`p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden ${
-        isOfficer
-          ? 'bg-gradient-to-r from-stone-900 via-stone-900 to-cyan-950 border-2 border-cyan-500/40'
-          : 'bg-gradient-to-r from-stone-900 via-stone-900 to-emerald-950 border-2 border-emerald-500/40'
-      }`}>
+      <div className="p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden bg-gradient-to-r from-stone-900 via-stone-900 to-cyan-950 border-2 border-cyan-500/40">
         <div className="flex flex-wrap items-center justify-between gap-4 relative z-10">
           <div className="flex items-center gap-4">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg ${
-              isOfficer ? 'bg-cyan-500 text-stone-950' : 'bg-emerald-500 text-stone-950'
-            }`}>
-              {isOfficer ? '👔' : '👨‍🌾'}
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg bg-cyan-500 text-stone-950">
+              👔
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
-                  isOfficer
-                    ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40'
-                    : 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
-                }`}>
-                  {isOfficer ? 'Field Officer Profile' : 'Rubber Tapper Profile'}
+                <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border bg-cyan-500/20 text-cyan-300 border-cyan-400/40">
+                  Field Officer Profile
                 </span>
                 <span className="text-xs font-mono text-stone-400 font-bold">
-                  {currentUser?.username || 'TAP-4102'}
+                  {currentUser?.username || 'OFF-108'}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black mt-0.5">{currentUser?.name || 'Sunanda'}</h1>
+              <h1 className="text-2xl sm:text-3xl font-black mt-0.5">{currentUser?.name || 'Aruna Pathirana'}</h1>
               <p className="text-stone-300 text-xs mt-0.5">
                 {estate}
               </p>
@@ -63,56 +52,29 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Role-Aware Performance Summary Cards */}
-      {isOfficer ? (
-        /* Field Officer Performance Dashboard */
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Supervised Blocks</p>
-            <p className="text-2xl font-black text-stone-900 mt-1">14 Blocks</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">1,420 Trees Monitored</p>
-          </div>
-          <div className="bg-white border-2 border-cyan-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">AI Override Accuracy</p>
-            <p className="text-2xl font-black text-cyan-600 mt-1">96.4%</p>
-            <p className="text-[10px] text-emerald-600 font-bold mt-0.5">High Model Agreement</p>
-          </div>
-          <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Assigned Tappers</p>
-            <p className="text-2xl font-black text-stone-900 mt-1">12 Tappers</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Active under supervision</p>
-          </div>
-          <div className="bg-white border-2 border-amber-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Agronomic Level</p>
-            <p className="text-2xl font-black text-amber-600 mt-1">Senior</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Certified Officer Level III</p>
-          </div>
+      {/* Field Officer Performance Dashboard */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
+          <p className="text-[10px] font-bold text-stone-500 uppercase">Supervised Blocks</p>
+          <p className="text-2xl font-black text-stone-900 mt-1">14 Blocks</p>
+          <p className="text-[10px] text-stone-400 font-semibold mt-0.5">1,420 Trees Monitored</p>
         </div>
-      ) : (
-        /* Rubber Tapper Performance Dashboard */
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Assigned Block</p>
-            <p className="text-2xl font-black text-stone-900 mt-1">Block A12</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Kegalle Division 1</p>
-          </div>
-          <div className="bg-white border-2 border-emerald-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Workmanship Rating</p>
-            <p className="text-2xl font-black text-emerald-600 mt-1">4.9 ⭐</p>
-            <p className="text-[10px] text-emerald-700 font-bold mt-0.5">Grade A Acceptable Cut</p>
-          </div>
-          <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Daily Tapping Target</p>
-            <p className="text-2xl font-black text-stone-900 mt-1">140 Trees</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Avg 1.25 kg/tree</p>
-          </div>
-          <div className="bg-white border-2 border-amber-200 p-4 rounded-2xl shadow-sm">
-            <p className="text-[10px] font-bold text-stone-500 uppercase">Tapper Status</p>
-            <p className="text-2xl font-black text-amber-600 mt-1">Master</p>
-            <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Certified Panel Specialist</p>
-          </div>
+        <div className="bg-white border-2 border-cyan-200 p-4 rounded-2xl shadow-sm">
+          <p className="text-[10px] font-bold text-stone-500 uppercase">AI Override Accuracy</p>
+          <p className="text-2xl font-black text-cyan-600 mt-1">96.4%</p>
+          <p className="text-[10px] text-emerald-600 font-bold mt-0.5">High Model Agreement</p>
         </div>
-      )}
+        <div className="bg-white border-2 border-stone-200 p-4 rounded-2xl shadow-sm">
+          <p className="text-[10px] font-bold text-stone-500 uppercase">Assigned Tappers</p>
+          <p className="text-2xl font-black text-stone-900 mt-1">12 Tappers</p>
+          <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Active under supervision</p>
+        </div>
+        <div className="bg-white border-2 border-amber-200 p-4 rounded-2xl shadow-sm">
+          <p className="text-[10px] font-bold text-stone-500 uppercase">Agronomic Level</p>
+          <p className="text-2xl font-black text-amber-600 mt-1">Senior</p>
+          <p className="text-[10px] text-stone-400 font-semibold mt-0.5">Certified Officer Level III</p>
+        </div>
+      </div>
 
       {/* Editable Account Profile Form */}
       <div className="bg-white border-2 border-stone-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
@@ -122,7 +84,7 @@ export default function Profile() {
             <p className="text-xs text-stone-500">Update contact details, language preferences and notifications</p>
           </div>
           <span className="bg-stone-100 text-stone-700 font-bold text-xs px-3 py-1 rounded-full">
-            Role: {isOfficer ? 'Field Officer' : 'Rubber Tapper'}
+            Role: Field Officer
           </span>
         </div>
 
